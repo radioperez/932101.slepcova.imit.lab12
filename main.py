@@ -62,9 +62,12 @@ class MainWindow(QMainWindow):
         self.graph.addItem(cloudy)
         self.graph.addItem(overcast)
 
+        self.statistics = QLabel("")
+
         layout = QVBoxLayout()
         layout.addLayout(panel)
         layout.addWidget(self.graph)
+        layout.addWidget(self.statistics)
         root = QWidget()
         root.setLayout(layout)
         self.setCentralWidget(root)
@@ -121,6 +124,8 @@ class MainWindow(QMainWindow):
         # TODO статическая обработка полученных данных !
         STATS, _ = np.histogram(self.weathers, bins=3)
         FREQUENCY = STATS/sum(STATS)
+        text = f'''Статистика: СОЛНЕЧНО = {STATS[0]} | ОБЛАЧНО = {STATS[1]} | ПАСМУРНО = {STATS[2]}\nВероятности: {FREQUENCY[0]:.4f} | ОБЛАЧНО = {FREQUENCY[1]:.4f} | ПАСМУРНО = {FREQUENCY[2]:.4f}'''
+        self.statistics.setText(text)
         print(FREQUENCY)
 
 
